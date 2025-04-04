@@ -8,6 +8,38 @@ from rich.text import Text
 
 console = Console()
 
+# Dans display.py, ajoutez une variable globale pour le compteur
+rafraichissements = 0
+
+def create_display2(cpu, memoire, disque, top_processus, temperature, conditions, humidite, bytes_envoyes, bytes_recus):
+    global rafraichissements
+    rafraichissements += 1  # incrémente à chaque mise à jour
+
+    date_heure = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+    titre = Text(f"SYSTÈME DE MONITORING - {date_heure}", style="bold cyan")
+    compteur = Text(f"Rafraîchissements : {rafraichissements}", style="bold yellow")
+
+    # ... reste du code d'affichage ...
+
+    contenu = Group(
+        titre,
+        compteur,
+        cpu_txt,
+        memoire_txt,
+        table,
+        processus_txt,
+        Text("-" * 60, style="dim"),
+        meteo_txt,
+        Text("-" * 60, style="dim"),
+        reseau_txt,
+        Text("=" * 60, style="dim"),
+        Text("Données mises à jour automatiquement toutes les 5 secondes", style="italic"),
+        Text("Logs enregistrés dans : logs/", style="italic")
+    )
+
+    return Panel(contenu, border_style="green", padding=(1, 2))
+
+
 def create_display(cpu, memoire, disque, top_processus, temperature, conditions, humidite, bytes_envoyes, bytes_recus):
     """Crée et retourne un Panel contenant l'affichage complet du monitoring."""
     
