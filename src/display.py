@@ -1,3 +1,4 @@
+# src/display.py
 from datetime import datetime
 from rich.console import Console
 from rich.progress import BarColumn, Progress, TextColumn
@@ -5,74 +6,78 @@ from rich.table import Table
 
 console = Console()
 
-def display_metrics(cpu, memory, disk, top_processes, temperature, conditions, humidity):
+def display_metrics(cpu, memoire, disque, top_processus, temperature, conditions, humidite):
     """
     Affiche les métriques système et les données météo dans la console.
     
     Arguments:
-      cpu          : Utilisation CPU (en %)
-      memory       : Tuple (used, available, percent) de la mémoire
-      disk         : Liste de tuples (device, used, total, percent) pour chaque partition
-      top_processes: Liste des processus les plus gourmands en CPU
-      temperature  : Température extérieure (peut être None)
-      conditions   : Description des conditions météo (peut être None)
-      humidity     : Humidité en % (peut être None)
+      cpu          : Pourcentage d'utilisation du CPU.
+      memoire      : Tuple (utilisé, disponible, pourcentage) de la mémoire.
+      disque       : Liste de tuples (partition, utilisé, total, pourcentage) pour chaque disque.
+      top_processus: Liste des processus consommant le plus de CPU.
+      temperature  : Température extérieure (None si indisponible).
+      conditions   : Description des conditions météorologiques.
+      humidite     : Pourcentage d'humidité.
     """
     console.clear()
-    # Affichage du titre avec la date et l'heure actuelles
-    console.print(f"[bold cyan]SYSTÈME DE MONITORING - {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}[/bold cyan]\n")
+    date_heure = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+    console.print(f"[bold cyan]SYSTÈME DE MONITORING - {date_heure}[/bold cyan]")
+    console.print("="*62)
     
     # Affichage des métriques système
     console.print("[bold]--------- MÉTRIQUES SYSTÈME ---------[/bold]")
     
-    # Affichage de l'utilisation CPU avec une barre de progression
-    with Progress(
-        TextColumn("CPU"),
-        BarColumn(),
-        TextColumn("{task.percentage:>3.0f}%"),
-        console=console, transient=True
-    ) as progress:
-        progress.add_task("", total=100, completed=cpu)
+    # CPU
+    barre_cpu = "█" * int(cpu // 2) + "░" * (50 - int(cpu // 2))
+    etat_cpu = "[NORMAL]" if 10 <= cpu <= 90 else "[CRITIQUE]"
+    console.print(f"CPU: {barre_cpu} {cpu}% {etat_cpu}")
     
-    # Affichage de la mémoire
-    with Progress(
-        TextColumn("Mémoire"),
-        BarColumn(),
-        TextColumn("{task.percentage:>3.0f}%"),
-        console=console, transient=True
-    ) as progress:
-        progress.add_task("", total=100, completed=memory[2])
-    console.print(f"Utilisée: {memory[0]:.2f} GB, Disponible: {memory[1]:.2f} GB\n")
+    # Mémoire
+    barre_memoire = "█" * int(memoire[2] // 2) + "░" * (50 - int(memoire[2] // 2))
+    etat_memoire = "[NORMAL]" if memoire[2] < 90 else "[CRITIQUE]"
+    console.print(f"MÉMOIRE: {barre_memoire} {memoire[2]}% (Utilisé: {memoire[0]:.2f} GB / Total: {memoire[1]:.2f} GB) {etat_memoire}")
     
-    # Affichage de l'espace disque sous forme de tableau
-    table = Table(title="ESPACE DISQUE")
-    table.add_column("Partition", justify="center", style="cyan", no_wrap=True)
-    table.add_column("Utilisé (GB)", justify="right", style="magenta")
-    table.add_column("Total (GB)", justify="right", style="green")
-    table.add_column("Pourcentage", justify="right", style="yellow")
-    for d in disk:
-        table.add_row(d[0], f"{d[1]:.2f}", f"{d[2]:.2f}", f"{d[3]}%")
+    # Espace disque
+    console.print("ESPACE DISQUE:")
+    table = Table(show_header=True, header_style="bold magenta")
+    table.add_column("Partition", style="cyan")
+    table.add_column("Utilisé (GB)", justify="right")
+    table.add_column("Total (GB)", justify="right")
+    table.add_column("Pourcentage", justify="right")
+    for d in disque:
+        etat_disque = "[NORMAL]" if d[3] < 90 else "[CRITIQUE]"
+        table.add_row(d[0], f"{d[1]:.2f}", f"{d[2]:.2f}", f"{d[3]}% {etat_disque}")
     console.print(table)
     
-    # Affichage des top processus consommant le plus de CPU
-    console.print("\n[bold]TOP PROCESSUS (CPU)[/bold]")
-    for idx, process in enumerate(top_processes, 1):
-        cpu_percent = process.info.get("cpu_percent", 0)
-        mem_info = process.info.get("memory_info")
-        mem_usage = mem_info.rss / (1024 ** 2) if mem_info else 0
-        console.print(f"{idx}. {process.info.get('name', 'Unknown')} (PID: {process.info.get('pid')}) - {cpu_percent}% CPU - {mem_usage:.2f} MB MEM")
+    # Top processus
+    console.print("[bold]TOP PROCESSUS (CPU):[/bold]")
+    for idx, p in enumerate(top_processus, 1):
+        nom = p.info.get("name", "Inconnu")
+        pid = p.info.get("pid", "N/A")
+        cpu_proc = p.info.get("cpu_percent", 0)
+        mem_info = p.info.get("memory_info")
+        mem_proc = mem_info.rss / (1024 ** 2) if mem_info else 0
+        console.print(f"{idx}. {nom} (PID: {pid}) - {cpu_proc}% CPU - {mem_proc:.2f} MB MEM")
     
-    # Affichage des données météo
-    console.print("\n[bold]--------- MÉTÉO LOCALE ---------[/bold]")
+    # Affichage de la météo
+    console.print("[bold]--------- MÉTÉO LOCALE (Paris) ---------[/bold]")
     if temperature is not None:
-        console.print(f"Température: {temperature}°C - {conditions} - Humidité: {humidity}%")
-        if temperature < 10 or temperature > 35:
-            console.print("[red][WARNING] Température extérieure hors plage normale![/red]")
-        else:
-            console.print("[green]Température dans la plage normale.[/green]")
+        etat_temp = "[INFORMATION]" if 10 <= temperature <= 35 else "[WARNING]"
+        console.print(f"Température: {temperature}°C - {conditions}\nHumidité: {humidite}% {etat_temp}")
     else:
-        console.print("[red]Erreur de récupération des données météo.[/red]")
+        console.print("[red]Erreur lors de la récupération des données météo.[/red]")
     
-    # Informations supplémentaires
-    console.print("\nDonnées mises à jour automatiquement toutes les 5 secondes")
+    console.print("="*62)
+    console.print("Données mises à jour automatiquement toutes les 5 secondes")
     console.print("Logs enregistrés dans: logs/")
+
+if __name__ == "__main__":
+    # Exemple de test rapide
+    cpu_ex = 78.5
+    memoire_ex = (10.9, 16.0, 68.2)
+    disque_ex = [("C:\\", 189.2, 298.5, 63.4), ("D:\\", 154.0, 500.0, 30.8)]
+    top_processus_ex = []  # Pour tester, la liste peut être vide
+    temperature_ex = 24.5
+    conditions_ex = "ensoleillé"
+    humidite_ex = 45
+    display_metrics(cpu_ex, memoire_ex, disque_ex, top_processus_ex, temperature_ex, conditions_ex, humidite_ex)

@@ -1,48 +1,59 @@
+# src/system_monitor.py
 import psutil
 
 def get_cpu_usage():
-    """Retourne l'utilisation du CPU en pourcentage."""
+    """Retourne le pourcentage d'utilisation du CPU."""
     return psutil.cpu_percent(interval=1)
 
 def get_memory_usage():
-    """Retourne l'utilisation de la mémoire (utilisée, disponible, pourcentage)."""
-    memory = psutil.virtual_memory()
-    used = memory.used / (1024 ** 3)  # Convertir en GB
-    available = memory.available / (1024 ** 3)
-    return used, available, memory.percent
+    """Retourne un tuple (utilisé, disponible, pourcentage) pour la mémoire."""
+    memoire = psutil.virtual_memory()
+    utilise = memoire.used / (1024 ** 3)         # Conversion en GB
+    disponible = memoire.available / (1024 ** 3)
+    pourcentage = memoire.percent
+    return utilise, disponible, pourcentage
 
 def get_disk_usage():
-    """Retourne l'utilisation du disque pour chaque partition."""
+    """Retourne une liste de tuples (partition, utilisé, total, pourcentage) pour chaque disque."""
     partitions = psutil.disk_partitions()
-    disk_info = []
+    liste_disque = []
     for partition in partitions:
         try:
             usage = psutil.disk_usage(partition.mountpoint)
-            used = usage.used / (1024 ** 3)  # Convertir en GB
+            utilise = usage.used / (1024 ** 3)
             total = usage.total / (1024 ** 3)
-            percent = usage.percent
-            disk_info.append((partition.device, used, total, percent))
+            pourcentage = usage.percent
+            liste_disque.append((partition.device, utilise, total, pourcentage))
         except PermissionError:
-            continue  # Évite les erreurs si une partition est inaccessible
-    return disk_info
+            continue  # Ignore les partitions inaccessibles
+    return liste_disque
 
 def get_top_processes(n=3):
-    """Retourne les N processus les plus gourmands en CPU."""
-    processes = sorted(psutil.process_iter(attrs=['pid', 'name', 'cpu_percent', 'memory_info']),
-                       key=lambda p: p.info['cpu_percent'], reverse=True)
-    return processes[:n]
+    """
+    Retourne une liste des n processus consommant le plus de CPU.
+    On filtre pour ignorer les processus système (PID ≤ 4).
+    """
+    processus = list(psutil.process_iter(attrs=['pid', 'name', 'cpu_percent', 'memory_info']))
+    # Mettre à jour les pourcentages rapidement
+    for p in processus:
+        try:
+            p.cpu_percent(interval=0.1)
+        except (psutil.NoSuchProcess, psutil.AccessDenied):
+            continue
+    processus = sorted(processus, key=lambda p: p.info['cpu_percent'], reverse=True)
+    processus_filtrés = [p for p in processus if p.info['pid'] > 4]
+    return processus_filtrés[:n]
 
 def get_system_metrics():
-    """Récupère toutes les métriques système et les retourne sous forme de tuple."""
+    """Retourne les métriques système sous forme de tuple (CPU, Mémoire, Disque, Top Processus)."""
     cpu = get_cpu_usage()
-    memory = get_memory_usage()
-    disk = get_disk_usage()
-    top_processes = get_top_processes()
-    return cpu, memory, disk, top_processes
+    memoire = get_memory_usage()
+    disque = get_disk_usage()
+    top_processus = get_top_processes()
+    return cpu, memoire, disque, top_processus
 
-# Test rapide du module
 if __name__ == "__main__":
-    print("CPU Usage:", get_cpu_usage(), "%")
-    print("Memory Usage:", get_memory_usage())
-    print("Disk Usage:", get_disk_usage())
-    print("Top Processes:", get_top_processes())
+    print("Utilisation CPU :", get_cpu_usage(), "%")
+    print("Utilisation Mémoire :", get_memory_usage())
+    print("Utilisation Disque :", get_disk_usage())
+    print("Top Processus :", get_top_processes())
