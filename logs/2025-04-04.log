@@ -253,3 +253,27 @@
 2025-04-04 15:25:48 | CPU: 21.6% | Mémoire: 81.3% (Utilisé: 5.64GB, Disponible: 1.30GB) | Disque: [('C:\\', '58.6%'), ('D:\\', '0.2%')] | Météo: 24.21°C
 2025-04-04 15:26:18 | CPU: 10.9% | Mémoire: 81.2% (Utilisé: 5.63 GB, Disponible: 1.31 GB) | Disque: [('C:\\', '58.6%'), ('D:\\', '0.2%')] | Météo: 24.21°C
 2025-04-04 15:26:19 | CPU: 15.1% | Mémoire: 81.3% (Utilisé: 5.64GB, Disponible: 1.30GB) | Disque: [('C:\\', '58.6%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:26:49 | CPU: 11.8% | Mémoire: 81.4% (Utilisé: 5.65 GB, Disponible: 1.29 GB) | Disque: [('C:\\', '58.6%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:26:51 | CPU: 16.9% | Mémoire: 81.4% (Utilisé: 5.65GB, Disponible: 1.29GB) | Disque: [('C:\\', '58.6%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:27:20 | CPU: 18.0% | Mémoire: 81.7% (Utilisé: 5.67 GB, Disponible: 1.27 GB) | Disque: [('C:\\', '58.6%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:27:22 | CPU: 23.7% | Mémoire: 81.6% (Utilisé: 5.66GB, Disponible: 1.28GB) | Disque: [('C:\\', '58.6%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:27:52 | CPU: 22.6% | Mémoire: 82.4% (Utilisé: 5.72 GB, Disponible: 1.22 GB) | Disque: [('C:\\', '58.6%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:27:53 | CPU: 27.7% | Mémoire: 82.4% (Utilisé: 5.72GB, Disponible: 1.22GB) | Disque: [('C:\\', '58.6%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:28:23 | CPU: 14.4% | Mémoire: 82.8% (Utilisé: 5.75 GB, Disponible: 1.19 GB) | Disque: [('C:\\', '58.6%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:28:24 | CPU: 62.8% | Mémoire: 82.1% (Utilisé: 5.70GB, Disponible: 1.24GB) | Disque: [('C:\\', '58.6%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:28:54 | CPU: 9.5% | Mémoire: 82.4% (Utilisé: 5.72 GB, Disponible: 1.22 GB) | Disque: [('C:\\', '58.6%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:28:55 | CPU: 20.5% | Mémoire: 82.4% (Utilisé: 5.72GB, Disponible: 1.22GB) | Disque: [('C:\\', '58.6%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:29:26 | CPU: 18.5% | Mémoire: 82.5% (Utilisé: 5.72 GB, Disponible: 1.21 GB) | Disque: [('C:\\', '58.6%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:29:26 | CPU: 30.1% | Mémoire: 82.5% (Utilisé: 5.72GB, Disponible: 1.21GB) | Disque: [('C:\\', '58.6%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:29:57 | CPU: 35.9% | Mémoire: 82.8% (Utilisé: 5.75GB, Disponible: 1.19GB) | Disque: [('C:\\', '58.6%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:30:06 | CPU: 20.4% | Mémoire: 84.0% (Utilisé: 5.83 GB, Disponible: 1.11 GB) | Disque: [('C:\\', '58.6%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:30:29 | CPU: 14.6% | Mémoire: 82.7% (Utilisé: 5.74GB, Disponible: 1.20GB) | Disque: [('C:\\', '58.7%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:30:37 | CPU: 18.0% | Mémoire: 82.8% (Utilisé: 5.74 GB, Disponible: 1.20 GB) | Disque: [('C:\\', '58.7%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:31:00 | CPU: 8.9% | Mémoire: 82.9% (Utilisé: 5.75GB, Disponible: 1.19GB) | Disque: [('C:\\', '58.7%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:31:08 | CPU: 15.3% | Mémoire: 82.8% (Utilisé: 5.74 GB, Disponible: 1.19 GB) | Disque: [('C:\\', '58.7%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:31:31 | CPU: 8.6% | Mémoire: 82.7% (Utilisé: 5.74GB, Disponible: 1.20GB) | Disque: [('C:\\', '58.7%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:31:39 | CPU: 12.0% | Mémoire: 82.7% (Utilisé: 5.74 GB, Disponible: 1.20 GB) | Disque: [('C:\\', '58.7%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:32:03 | CPU: 9.1% | Mémoire: 81.8% (Utilisé: 5.68GB, Disponible: 1.26GB) | Disque: [('C:\\', '58.7%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:32:11 | CPU: 10.2% | Mémoire: 81.9% (Utilisé: 5.68 GB, Disponible: 1.26 GB) | Disque: [('C:\\', '58.7%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:32:34 | CPU: 16.3% | Mémoire: 81.2% (Utilisé: 5.63GB, Disponible: 1.30GB) | Disque: [('C:\\', '58.7%'), ('D:\\', '0.2%')] | Météo: 24.21°C
+2025-04-04 15:32:42 | CPU: 15.5% | Mémoire: 81.4% (Utilisé: 5.64 GB, Disponible: 1.29 GB) | Disque: [('C:\\', '58.7%'), ('D:\\', '0.2%')] | Météo: 24.21°C
