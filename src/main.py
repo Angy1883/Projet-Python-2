@@ -6,19 +6,12 @@ from system_monitor import get_system_metrics, get_network_usage
 from weather_api import get_weather
 from logger import log_metrics
 from display import display_metrics
-import threading
-from graph import lancer_graphique
 
-# Dans le bloc principal, avant la boucle principale :
-thread_graph = threading.Thread(target=lancer_graphique, daemon=True)
-thread_graph.start()
+
 
 REFRESH_INTERVAL = 5  # rafraîchissement toutes les 5 secondes
 
 def main():
-    # Dans le bloc principal, avant la boucle principale :
-    thread_graph = threading.Thread(target=lancer_graphique, daemon=True)
-    thread_graph.start()
     while True:
         # Effacer l'écran AVANT de réafficher les nouvelles données
         os.system('cls' if os.name == 'nt' else 'clear')

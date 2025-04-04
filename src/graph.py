@@ -24,7 +24,7 @@ def update_cpu(frame):
 
 def lancer_graphique():
     """Lance le graphique en temps réel dans une fenêtre séparée."""
-    fig = plt.figure()
+    # fig = plt.figure()
     ani = animation.FuncAnimation(fig, update_cpu, interval=500)  # mise à jour toutes les 500 ms
     plt.show()
 
