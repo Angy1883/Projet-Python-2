@@ -36,3 +36,15 @@ def main():
 
 if __name__ == "__main__":
     main()
+    from rich.console import Console
+    console = Console()
+    
+    top_processus_ex = [
+        {"name": "chrome.exe", "pid": 1234, "cpu_percent": 85, "memory_info": type('mem', (object,), {"rss": 500 * 1024**2})()},
+        {"name": "code.exe", "pid": 5678, "cpu_percent": 65, "memory_info": type('mem', (object,), {"rss": 800 * 1024**2})()},
+        {"name": "explorer.exe", "pid": 9101, "cpu_percent": 35, "memory_info": type('mem', (object,), {"rss": 200 * 1024**2})()},
+    ]
+
+    panel = create_display(50.5, (8.2, 16.0, 51.3), [("C:\\", 120.0, 500.0, 24.0)], top_processus_ex, 22.5, "partiellement nuageux", 55, 40000000, 80000000)
+    console.print(panel)
+    console.print("Exécution terminée.")
