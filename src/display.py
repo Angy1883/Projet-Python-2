@@ -80,18 +80,24 @@ def create_display(cpu, memoire, disque, top_processus, temperature, conditions,
     # Regrouper toutes les sections
     contenu = Group(
         titre,
+        Text("\n"),
         cpu_txt,
+        Text("\n"),
         memoire_txt,
+        Text("\n"),
         table,
+        Text("\n"),
         processus_txt,
+        Text("\n"),
         Text("-" * 60, style="dim"),
         meteo_txt,
+        Text("\n"),
         Text("-" * 60, style="dim"),
         reseau_txt,
         Text("=" * 60, style="dim"),
         Text("Données mises à jour automatiquement toutes les 5 secondes", style="italic"),
         Text("Logs enregistrés dans : logs/", style="italic")
-    )
+        )
     
     # Retourner le contenu dans un Panel pour une belle bordure
     return Panel(contenu, border_style="green", padding=(1, 2))
