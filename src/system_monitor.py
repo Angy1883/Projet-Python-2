@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # src/system_monitor.py
 import psutil
 
@@ -6,9 +7,9 @@ def get_cpu_usage():
     return psutil.cpu_percent(interval=1)
 
 def get_memory_usage():
-    """Retourne un tuple (utilisé, disponible, pourcentage) pour la mémoire."""
+    """Retourne un tuple (utilisé, disponible, pourcentage) pour la mémoire en GB."""
     memoire = psutil.virtual_memory()
-    utilise = memoire.used / (1024 ** 3)         # Conversion en GB
+    utilise = memoire.used / (1024 ** 3)         # conversion en GB
     disponible = memoire.available / (1024 ** 3)
     pourcentage = memoire.percent
     return utilise, disponible, pourcentage
@@ -25,7 +26,7 @@ def get_disk_usage():
             pourcentage = usage.percent
             liste_disque.append((partition.device, utilise, total, pourcentage))
         except PermissionError:
-            continue  # Ignore les partitions inaccessibles
+            continue  # Ignorer les partitions inaccessibles
     return liste_disque
 
 def get_top_processes(n=3):
@@ -34,7 +35,7 @@ def get_top_processes(n=3):
     On filtre pour ignorer les processus système (PID ≤ 4).
     """
     processus = list(psutil.process_iter(attrs=['pid', 'name', 'cpu_percent', 'memory_info']))
-    # Mettre à jour les pourcentages rapidement
+    # Mettre à jour rapidement les pourcentages de CPU
     for p in processus:
         try:
             p.cpu_percent(interval=0.1)
@@ -43,6 +44,13 @@ def get_top_processes(n=3):
     processus = sorted(processus, key=lambda p: p.info['cpu_percent'], reverse=True)
     processus_filtrés = [p for p in processus if p.info['pid'] > 4]
     return processus_filtrés[:n]
+
+def get_network_usage():
+    """
+    Retourne un tuple (octets envoyés, octets reçus) pour la surveillance réseau.
+    """
+    counters = psutil.net_io_counters()
+    return counters.bytes_sent, counters.bytes_recv
 
 def get_system_metrics():
     """Retourne les métriques système sous forme de tuple (CPU, Mémoire, Disque, Top Processus)."""
@@ -57,3 +65,4 @@ if __name__ == "__main__":
     print("Utilisation Mémoire :", get_memory_usage())
     print("Utilisation Disque :", get_disk_usage())
     print("Top Processus :", get_top_processes())
+    print("Surveillance Réseau (Envoyé, Reçu) :", get_network_usage())
