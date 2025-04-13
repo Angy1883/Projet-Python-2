@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # src/display.py
 from datetime import datetime
 from rich.console import Group, Console
@@ -13,7 +12,7 @@ def get_cpu_color(cpu_percent):
     if cpu_percent > 80:
         return "bold red"  # 🔴 Rouge
     elif cpu_percent > 50:
-        return "bold orange3"  # 🟠 Orange
+        return "bold orange1"  # 🟠 Orange
     return "bold green"  # 🟢 Vert
 
 
@@ -53,21 +52,24 @@ def create_display(cpu, memoire, disque, top_processus, temperature, conditions,
     
     # Section Processus consommant le plus de CPU
     processus_txt = Text("Les processus qui consomment le plus de CPU :", style="bold")
-    for idx, p in enumerate(top_processus, 1):
-        nom = p.info.get("name", "Inconnu")
-        pid = p.info.get("pid", "N/A")
-        cpu_proc = p.info.get("cpu_percent", 0)
-        mem_info = p.info.get("memory_info")
-        mem_proc = mem_info.rss / (1024 ** 2) if mem_info else 0
-        cpu_color = get_cpu_color(cpu_proc)  # Appliquer la couleur
+    if top_processus:
+        for idx, p in enumerate(top_processus, 1):
+            nom = p.info.get("name", "Inconnu")
+            pid = p.info.get("pid", "N/A")
+            cpu_proc = p.info.get("cpu_percent", 0)
+            mem_info = p.info.get("memory_info")
+            mem_proc = mem_info.rss / (1024 ** 2) if mem_info else 0
+            cpu_color = get_cpu_color(cpu_proc)  # Appliquer la couleur
 
-        processus_txt.append(f"\n{idx}. {nom} (PID: {pid}) - ", style="bold")
-        processus_txt.append(f"{cpu_proc:.1f}% CPU", style=cpu_color)
-        processus_txt.append(f" - {mem_proc:.1f} MB MEM")
+            processus_txt.append(f"\n{idx}. {nom} (PID: {pid}) - ", style="bold")
+            processus_txt.append(f"{cpu_proc:.1f}% CPU", style=cpu_color)
+            processus_txt.append(f" - {mem_proc:.1f} MB MEM")
+    else:
+        processus_txt.append("\nAucun processus actif détecté.", style="dim")
 
     # Section Météo
-    if temperature is not None:
-        etat_temp = "[INFORMATION]" if 10 <= temperature <= 35 else "[ALERTE - Température hors plage]"
+    if temperature is not None and isinstance(temperature, (int, float)):
+        etat_temp = "[Température normale]" if 10 <= temperature <= 35 else "[ALERTE - Température hors plage]"
         meteo_txt = Text(f"Température: {temperature:.1f}°C - {conditions}\nHumidité: {humidite}% {etat_temp}", style="bold")
     else:
         meteo_txt = Text("Erreur lors de la récupération des données météo.", style="bold red")
