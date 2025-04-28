@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # src/system_monitor.py
 import psutil
 

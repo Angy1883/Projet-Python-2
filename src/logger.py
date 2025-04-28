@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # src/logger.py
 import os
 from datetime import datetime

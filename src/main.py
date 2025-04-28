@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # src/main.py
 import time
 import os

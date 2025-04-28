@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # src/weather_api.py
 import requests
 import os
 
 # Configuration de l'API
-API_KEY = os.getenv("API_KEY", "a69b8bc00846de2a42dcff82d4fcb8fa")  # Remplacez "votre_clé_api" par votre clé ou définissez la variable d'environnement
+API_KEY = os.getenv("API_KEY", "a69b8bc00846de2a42dcff82d4fcb8fa")  
 VILLE = os.getenv("VILLE", "Paris")
 URL_API = f"http://api.openweathermap.org/data/2.5/weather?q={VILLE}&appid={API_KEY}&units=metric&lang=fr"
 
